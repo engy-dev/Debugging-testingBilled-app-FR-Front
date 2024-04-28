@@ -22,7 +22,6 @@ export const filteredBills = (data, status) => {
           (bill.status === status) &&
           ![...USERS_TEST, userEmail].includes(bill.email)
       }
-
       return selectCondition
     }) : []
 }
@@ -86,6 +85,7 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
+    // this.id = 0;
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
@@ -144,13 +144,15 @@ export default class {
         .html("")
       this.counter ++
     }
-
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#open-bill${bill.id}`).click((e) => {
+        e.stopImmediatePropagation();
+        this.handleEditTicket(e, bill, bills)
+      })
     })
 
     return bills
-
+    
   }
 
   getBillsAllUsers = () => {
