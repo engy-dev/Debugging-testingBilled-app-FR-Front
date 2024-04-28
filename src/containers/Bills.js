@@ -26,14 +26,15 @@ export default class {
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
     $('#modaleFile').modal('show')
   }
-
   getBills = () => {
     if (this.store) {
       return this.store
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
+        const bills = snapshot.sort(function(a,b){
+          return new Date(b.date) - new Date(a.date)
+        })
           .map(doc => {
             try {
               return {
@@ -52,7 +53,9 @@ export default class {
               }
             }
           })
-          console.log('length', bills.length)
+        
+
+          console.log('length', bills.length, bills)
         return bills
       })
     }
