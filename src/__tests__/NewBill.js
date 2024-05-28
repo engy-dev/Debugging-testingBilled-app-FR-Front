@@ -94,7 +94,8 @@ describe("Given I am connected as an employee", () => {
       }))
       const file = new File(['image'], 'test-file.png', { type: 'image/png' });
       const file2 = new File(['document'], 'test-file.pdf', { type: 'document/pdf' });
-
+      const file3 = new File(['document'], 'test-file.jpg', { type: 'document/jpg' });
+      const file4 = new File(['document'], 'test-file.jpeg', { type: 'document/jpeg' });
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
       };
@@ -112,6 +113,10 @@ describe("Given I am connected as an employee", () => {
       userEvent.upload(fileInput, file2);
       expect(handleChangeFile).toHaveBeenCalled()
       userEvent.upload(fileInput, file);
+      expect(handleChangeFile).toHaveBeenCalled()
+      userEvent.upload(fileInput, file3);
+      expect(handleChangeFile).toHaveBeenCalled()
+      userEvent.upload(fileInput, file4);
       expect(handleChangeFile).toHaveBeenCalled()
     });
   });
